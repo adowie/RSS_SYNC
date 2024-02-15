@@ -19,10 +19,16 @@
 .\venv\Scripts\activate
 ```
 
+- You may also need to run
+  
+  ```bash
+  pip install --no-cache-dir -r requirements.txt
+  ```
+
 - **Run Sync Flow**
   - To run the main flow of the project use this command in your terminal:
   - If you are using Prefect Cloud run before the sync command: prefect cloud login
 
-    - ```python
-         python app/rss_sync.py
-      ```
+  ```python
+  python app/rss_sync.py
+  ```
