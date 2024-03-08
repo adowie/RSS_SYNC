@@ -9,14 +9,14 @@ from syncing import RSSFeedProcessor
 
 
 
-@task(log_prints=True)
+@task
 def ingest_data(feed):
     transformed_data = select_ingestor(feed, environ.get('FEED_INGESTOR'))
     print("Completed transformation...Initializing Queuing task...")
     return transformed_data
 
 
-@task(log_prints=True)
+@task
 def send_to_queue(data, use_kafka=True):
     # before adding to queue we need to verify if item is not already in queue
     servers = (
@@ -32,7 +32,7 @@ def send_to_queue(data, use_kafka=True):
         print(f"Sending {item['title']} to queue.....")
 
 
-@flow(name="Rss_To_Queue")
+@flow(name="rss_to_queue")
 def rss_to_queue(feed_url):
     rss_feed_processor = RSSFeedProcessor(feed_url)
     rss_feed_processor.fetch_feed()

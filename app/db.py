@@ -1,7 +1,12 @@
 from sqlalchemy import create_engine, Column, Integer, String
 from sqlalchemy.orm import sessionmaker, declarative_base
+from decouple import config
+from os import environ
+
+
 # Database connection (replace with your actual connection details)
-engine = create_engine("sqlite:///stories.db")
+db_conn = environ.get("DB_CONNECT") if environ.get("DB_CONNECT") else config("DB_CONNECT")
+engine = create_engine(f"{db_conn}")
 Base = declarative_base()
 
 # Define database model
