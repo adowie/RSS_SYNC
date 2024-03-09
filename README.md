@@ -21,12 +21,11 @@
   docker inspect <containerID> # to get ip address of container 
 ```
 
-
 ### After Docker Container is up and running, you can access the following services
 
 - View Kafka Topic Messages by opening the kakfa container
 - i.e. open using docker terminal
 
 ```shell
-  kafka-console-consumer --bootstrap-server localhost:9092 --topic SS_RSS_SYNC --from-beginning
+  kafka-console-consumer --bootstrap-server localhost:9092 --topic <QUEUE NAME> --from-beginning
 ```
