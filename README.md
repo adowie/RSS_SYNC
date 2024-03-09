@@ -11,6 +11,16 @@
 - ```bash
   docker-compose up -d --build
   ```
+### Possible Errors 
+- If connection errors occur re connecting containers update the  IP address of:
+- KAFKA_ADVERTISED_LISTENERS:
+- PREFECT_API_URL:
+- KAFKA_BOOTSTRAP_SERVERS:
+```shell
+  docker ps # to retrieve container IDs
+  docker inspect <containerID> # to get ip address of container 
+```
+
 
 ### After Docker Container is up and running, you can access the following services
 
