@@ -29,3 +29,6 @@
 ```shell
   kafka-console-consumer --bootstrap-server localhost:9092 --topic <QUEUE NAME> --from-beginning
 ```
+
+- Access Prefect Server (Orion) UI from your local machine
+- Open a browser window and go to `<http://localhost:4200>` aka PREFECT_API_URL
