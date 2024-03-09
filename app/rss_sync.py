@@ -1,12 +1,12 @@
 import json
 from os import environ
 from prefect import task, flow
+from prefect.deployments import Deployment
 from decouple import config
 from kafka import KafkaProducer as Producer
 from queuing import publish_feed_entry
 from ingestors import select_ingestor
 from syncing import RSSFeedProcessor
-
 
 
 @task
@@ -30,10 +30,16 @@ def send_to_queue(data, use_kafka=True):
     for item in data:
         publish_feed_entry(queue_name, item, producer, use_kafka)
         print(f"Sending {item['title']} to queue.....")
+    print("Completed queue transfer... exiting flow ....")
 
 
 @flow(name="rss_to_queue")
-def rss_to_queue(feed_url):
+def rss_to_queue():
+    feed_url = (
+        environ.get("RSS_FEED_URL")
+        if environ.get("RSS_FEED_URL")
+        else config("RSS_FEED_URL")
+    )
     rss_feed_processor = RSSFeedProcessor(feed_url)
     rss_feed_processor.fetch_feed()
     
@@ -42,10 +48,9 @@ def rss_to_queue(feed_url):
 
 
 if __name__ == "__main__":
-    feed_url = (
-        environ.get("RSS_FEED_URL")
-        if environ.get("RSS_FEED_URL")
-        else config("RSS_FEED_URL")
-    )
-    rss_to_queue(feed_url)
-    # rss_to_queue.schedule(cron="0 * * * *")  # Run the flow every hour (adjust scheduling as needed)
+    # rss_to_queue()
+    # create deployment from flow
+    deployment = Deployment.build_from_flow(flow=rss_to_queue, name="rss_sync_flow", version="1", tags=["sync_feed"])
+    deployment.apply()
+    # to schedule this flow use the orion UI at deployments - there is an add schedule feature
+    

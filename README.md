@@ -14,26 +14,6 @@
 
 ### After Docker Container is up and running, you can access the following services
 
-- **Activate virtual environment**
-
-```bash
-.\venv\Scripts\activate
-```
-
-- You may also need to run
-  
-  ```bash
-  pip install --no-cache-dir -r requirements.txt
-  ```
-
-- **Run Sync Flow**
-  - To run the main flow of the project use this command in your terminal:
-  - If you are using Prefect Cloud run before the sync command: prefect cloud login
-
-  ```bash
-  python app/rss_sync.py
-  ```
-
 - View Kafka Topic Messages by opening the kakfa container
 - i.e. open using docker terminal
 
